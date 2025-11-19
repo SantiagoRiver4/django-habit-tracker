@@ -10,7 +10,6 @@ __pycache__/
 *.pyd
 
 # Archivos de Django
-db.sqlite3
 /media/
 staticfiles/
 
