@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calificar aplicación</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #f5f5f5;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #ff2e2e;
+            margin-bottom: 25px;
+        }
+
+        form {
+            background-color: #1a1a1a;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(255, 46, 46, 0.15);
+            width: 340px;
+        }
+
+        form p {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #e6e6e6;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            background-color: #2b2b2b;
+            color: #f5f5f5;
+            outline: none;
+            resize: none;
+        }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0 15px 0;
+        }
+
+        .star {
+            font-size: 2rem;
+            color: #555;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            margin: 0 4px;
+        }
+
+        .star.selected,
+        .star:hover,
+        .star:hover ~ .star {
+            color: #ff2e2e;
+        }
+
+        button {
+            background-color: #ff2e2e;
+            color: #fff;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background-color: #ff4d4d;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 25px;
+            color: #ff2e2e;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: #ff4d4d;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Califica tu experiencia</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            <label for="nombre_usuario">Tu nombre</label>
+            <input type="text" id="nombre_usuario" name="nombre_usuario" required>
+        </p>
+
+        <p>
+            <label>Tu calificación</label>
+            <div class="stars">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+            </div>
+            <!-- name cambiado a 'calificacion' para que el ModelForm valide -->
+            <input type="hidden" name="calificacion" id="rating" required>
+        </p>
+
+        <!-- 🔽 NUEVO: campo de comentario -->
+        <p>
+            <label for="comentario">Comentarios</label>
+            <textarea id="comentario" name="comentario" rows="4" placeholder="Escribe tu opinión aquí..."></textarea>
+        </p>
+
+        <button type="submit">Guardar calificación</button>
+    </form>
+
+    <a href="{% url 'polls:index' %}">Volver al inicio</a>
+
+    <script>
+        const stars = document.querySelectorAll('.star');
+        const ratingInput = document.getElementById('rating');
+
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                ratingInput.value = star.getAttribute('data-value');
+                stars.forEach(s => s.classList.remove('selected'));
+                for (let i = 0; i <= index; i++) {
+                    stars[i].classList.add('selected');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

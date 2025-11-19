@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calificaciones</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: linear-gradient(180deg, #0d0d0d 0%, #121212 100%);
+            color: #f5f5f5;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 24px 16px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #ff2e2e;
+            margin-bottom: 18px;
+        }
+
+        .list {
+            width: 360px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .item {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            padding: 12px 14px;
+            box-shadow: 0 0 14px rgba(255,46,46,0.08);
+            text-align: left;
+        }
+
+        .name {
+            color: #ff2e2e;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .stars {
+            color: #ff2e2e;
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+        }
+
+        .comment {
+            color: #ddd;
+            font-size: 0.95rem;
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+
+        .empty {
+            margin-top: 14px;
+            color: #999;
+            font-style: italic;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 18px;
+            color: #ff2e2e;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #ff4d4d;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calificaciones</h1>
+
+    <div class="list">
+        {% if calificaciones %}
+            {% for c in calificaciones %}
+                <div class="item">
+                    <div class="name">{{ c.nombre_usuario }}</div>
+                    <div class="stars">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= c.calificacion %}
+                                <span>&#9733;</span>
+                            {% else %}
+                                <span style="opacity:0.18">&#9733;</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    {# 🔽 NUEVO: comentario si existe #}
+                    {% if c.comentario %}
+                        <div class="comment">“{{ c.comentario }}”</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty">Aún no hay calificaciones.</div>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'polls:index' %}">Volver al inicio</a>
+</body>
+</html>

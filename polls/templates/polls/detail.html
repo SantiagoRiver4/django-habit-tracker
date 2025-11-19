@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ habit.habit_text }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #0f0f0f;
+            color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #ff4040;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        p {
+            color: #c0c0c0;
+            max-width: 600px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #ffffff;
+            margin-top: 40px;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        li {
+            background: #1b1b1b;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            color: #e0e0e0;
+            border-left: 4px solid #ff4040;
+            font-size: 0.95em;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #ff4040;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            background-color: #ff6060;
+            transform: scale(1.03);
+        }
+
+        .empty {
+            color: #888;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ habit.habit_text }}</h1>
+    <p>{{ habit.description }}</p>
+
+    <h2>Registros recientes</h2>
+    {% if records %}
+        <ul>
+        {% for record in records %}
+            <li>{{ record.record_date|date:"d M Y H:i" }} — {{ record.notes }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p class="empty">Aún no hay registros para este hábito.</p>
+    {% endif %}
+
+    <div class="buttons">
+        <a href="{% url 'polls:add_record' habit.id %}">Registrar cumplimiento</a>
+        <a href="{% url 'polls:index' %}">Volver a mis hábitos</a>
+    </div>
+</body>
+</html>

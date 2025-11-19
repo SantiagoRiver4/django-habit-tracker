@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Eliminar hábito</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: radial-gradient(circle at top, #ffe5e5, #f4f3ee);
+            color: #2b3a33;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 32px 16px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 22px 22px 18px;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: 1.5rem;
+        }
+
+        .warning {
+            font-size: 0.95rem;
+            color: #7a3434;
+            background: #fff4f4;
+            border: 1px solid #f0b4b4;
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+        }
+
+        .habit-name {
+            font-weight: 600;
+        }
+
+        .actions {
+            margin-top: 18px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .danger-button {
+            text-decoration: none;
+            background: #c23333;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .secondary-link {
+            text-decoration: none;
+            font-size: 0.85rem;
+            color: #50625a;
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid #cdd6d0;
+            background: #f7fbf8;
+        }
+
+        .secondary-link:hover {
+            background: #e9f3ee;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Eliminar hábito</h1>
+        <p>Estás a punto de eliminar el hábito:</p>
+        <p class="habit-name">“{{ habit.habit_text }}”</p>
+
+        <div class="warning">
+            Esta acción es permanente. También se eliminarán todos los registros asociados a este hábito.
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="actions">
+                <button type="submit" class="danger-button">
+                    🗑️ Sí, eliminar definitivamente
+                </button>
+                <a href="{% url 'polls:index' %}" class="secondary-link">
+                    ⬅ Cancelar y volver
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
